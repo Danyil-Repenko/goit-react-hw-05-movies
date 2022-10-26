@@ -18,7 +18,7 @@ const Movies = () => {
         return results.map(result => TrandingListElement(result, location));
       })
       .then(movies => setMovies(movies));
-  }, []);
+  }, [queryString, location]);
 
   const updateQueryString = query => {
     const nextParams = query !== '' ? { query } : {};
