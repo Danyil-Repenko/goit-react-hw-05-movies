@@ -1,10 +1,10 @@
 import { TrandingListElement } from 'components/TrandingListElement/TrandingListElement';
 import { useState, useEffect } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
-import { performSearch } from 'performSearch';
+import { performSearch } from 'tools/performSearch';
 
 const Movies = () => {
-  const [movies, setMovies] = useState(null);
+  const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const queryString = searchParams.get('query') ?? '';
@@ -18,7 +18,7 @@ const Movies = () => {
         return results.map(result => TrandingListElement(result, location));
       })
       .then(movies => setMovies(movies));
-  }, [queryString, location]);
+  }, []);
 
   const updateQueryString = query => {
     const nextParams = query !== '' ? { query } : {};
@@ -33,7 +33,8 @@ const Movies = () => {
       .then(({ results }) => {
         return results.map(result => TrandingListElement(result, location));
       })
-      .then(movies => setMovies(movies));
+      .then(movies => setMovies(movies))
+      .catch(error => console.log(error));
   };
 
   return (

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { performSearch } from 'performSearch';
+import { performSearch } from 'tools/performSearch';
 
 const MovieReviews = () => {
-  const [reviews, setReviews] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const { movieID } = useParams();
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const MovieReviews = () => {
 
   return (
     <ul>
-      {reviews ? (
+      {reviews.length > 0 ? (
         reviews.map(({ author, id, content }) => {
           return (
             <li key={id}>

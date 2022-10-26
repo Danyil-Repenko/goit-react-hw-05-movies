@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { performSearch } from 'performSearch';
+import { performSearch } from 'tools/performSearch';
 
 const TrandingList = () => {
-  const [tranding, setTranding] = useState(null);
+  const [tranding, setTranding] = useState([]);
 
   useEffect(() => {
     const exactUrl = 'trending/all/day';
@@ -16,7 +16,7 @@ const TrandingList = () => {
     <div>
       <h2>Tranding Today</h2>
       <ul>
-        {tranding &&
+        {tranding.length > 0 &&
           tranding.map(({ title, id, name }) => {
             return (
               <li key={id}>

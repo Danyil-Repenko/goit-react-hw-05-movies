@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { performSearch } from 'performSearch';
+import { performSearch } from 'tools/performSearch';
 
 const MovieCast = () => {
-  const [cast, setCast] = useState(null);
+  const [cast, setCast] = useState([]);
   const { movieID } = useParams();
 
   useEffect(() => {
@@ -13,15 +13,15 @@ const MovieCast = () => {
 
   return (
     <ul>
-      {cast &&
+      {cast.length > 0 &&
         cast.map(({ name, character, profile_path, id }) => {
+          const image_path = profile_path
+            ? `https://image.tmdb.org/t/p/w500${profile_path}`
+            : '';
           return (
             <li key={id}>
               <div>
-                <img
-                  src={`https://image.tmdb.org/t/p/w500${profile_path}`}
-                  alt={name}
-                />
+                <img src={image_path} alt={name} />
               </div>
               <div>
                 <p>{name}</p>
