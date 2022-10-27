@@ -13,7 +13,9 @@ const Movie = () => {
 
   useEffect(() => {
     const exactUrl = `movie/${movieID}`;
-    performSearch(exactUrl).then(data => setMovie(data));
+    performSearch(exactUrl)
+      .then(data => setMovie(data))
+      .catch(error => console.log(error));
   }, [movieID]);
 
   return (
@@ -22,14 +24,22 @@ const Movie = () => {
         Go back
       </button>
       <div>{movie && MovieDetails(movie)}</div>
-      <ul>
-        <li>
-          <NavLink to="cast">Cast</NavLink>
-        </li>
-        <li>
-          <NavLink to="reviews">Reviews</NavLink>
-        </li>
-      </ul>
+      <div
+        style={{
+          borderTop: 'solid 1px #000000',
+          borderBottom: 'solid 1px #000000',
+        }}
+      >
+        <p>Additional information</p>
+        <ul>
+          <li>
+            <NavLink to="cast">Cast</NavLink>
+          </li>
+          <li>
+            <NavLink to="reviews">Reviews</NavLink>
+          </li>
+        </ul>
+      </div>
       <div>
         <Suspense fallback={<div>Loading subpage...</div>}>
           <Outlet />

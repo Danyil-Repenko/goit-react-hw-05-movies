@@ -1,55 +1,48 @@
-import { TrandingListElement } from 'components/TrandingListElement/TrandingListElement';
-import { useState, useEffect } from 'react';
+import { ListElement } from 'components/ListElement/ListElement';
+import { SearchBox } from 'components/SearchBox/SearchBox';
+import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { performSearch } from 'tools/performSearch';
+import { SearchBtn, SearchWrapper } from './Movies.styled';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
+  const [queryValue, setQueryValue] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
-  const location = useLocation();
   const queryString = searchParams.get('query') ?? '';
+  const location = useLocation();
+
+  const search = useCallback(() => {
+    const exactUrl = 'search/movie';
+    performSearch(exactUrl, queryString)
+      .then(({ results }) => setMovies(results))
+      .catch(error => console.log(error));
+  }, [queryString]);
 
   useEffect(() => {
     if (queryString === '') return;
+    setQueryValue(queryString);
+    search();
+  }, [search, queryString]);
 
-    const exactUrl = 'search/movie';
-    performSearch(exactUrl, queryString)
-      .then(({ results }) => {
-        return results.map(result => TrandingListElement(result, location));
-      })
-      .then(movies => setMovies(movies));
-  }, [queryString, location]);
-
-  const updateQueryString = query => {
-    const nextParams = query !== '' ? { query } : {};
-    setSearchParams(nextParams);
-  };
-
-  const performeSearch = () => {
-    if (queryString === '') return;
-
-    const exactUrl = 'search/movie';
-    performSearch(exactUrl, queryString)
-      .then(({ results }) => {
-        return results.map(result => TrandingListElement(result, location));
-      })
-      .then(movies => setMovies(movies))
-      .catch(error => console.log(error));
+  const onSearch = () => {
+    if (queryValue === '') return;
+    const params = queryValue !== '' ? { query: queryValue } : {};
+    setSearchParams(params);
+    search();
   };
 
   return (
     <div>
-      <input
-        type="text"
-        value={queryString}
-        onChange={event => {
-          updateQueryString(event.target.value);
-        }}
-      />
-      <button type="button" onClick={performeSearch}>
-        Search
-      </button>
-      <ul>{movies}</ul>
+      <SearchWrapper>
+        <SearchBox value={queryValue} update={setQueryValue} />
+        <SearchBtn type="button" onClick={onSearch}>
+          Search
+        </SearchBtn>
+      </SearchWrapper>
+      <ul>
+        {movies.length > 0 && movies.map(movie => ListElement(movie, location))}
+      </ul>
     </div>
   );
 };

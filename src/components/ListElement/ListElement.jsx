@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-export const TrandingListElement = (info, location) => {
+export const ListElement = (info, location) => {
   const { title, id, name } = info;
   return (
     <li key={id}>

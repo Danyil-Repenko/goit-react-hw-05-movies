@@ -8,7 +8,9 @@ const MovieCast = () => {
 
   useEffect(() => {
     const exactUrl = `movie/${movieID}/credits`;
-    performSearch(exactUrl).then(data => setCast(data.cast));
+    performSearch(exactUrl)
+      .then(data => setCast(data.cast))
+      .catch(error => console.log(error));
   }, [movieID]);
 
   return (
@@ -20,7 +22,7 @@ const MovieCast = () => {
             : '';
           return (
             <li key={id}>
-              <div>
+              <div style={{ width: 100 }}>
                 <img src={image_path} alt={name} />
               </div>
               <div>

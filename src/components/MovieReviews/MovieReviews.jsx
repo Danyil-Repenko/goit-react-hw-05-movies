@@ -8,7 +8,9 @@ const MovieReviews = () => {
 
   useEffect(() => {
     const exactUrl = `movie/${movieID}/reviews`;
-    performSearch(exactUrl).then(data => setReviews(data.results));
+    performSearch(exactUrl)
+      .then(data => setReviews(data.results))
+      .catch(error => console.log(error));
   }, [movieID]);
 
   return (
