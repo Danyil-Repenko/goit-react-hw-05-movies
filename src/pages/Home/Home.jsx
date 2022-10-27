@@ -15,7 +15,10 @@ const HomePage = () => {
   return (
     <div>
       <h2>Tranding Today</h2>
-      <ul>{tranding.length > 0 && tranding.map(film => ListElement(film))}</ul>
+      <ul>
+        {tranding.length > 0 &&
+          tranding.map(film => <ListElement info={film} />)}
+      </ul>
     </div>
   );
 };

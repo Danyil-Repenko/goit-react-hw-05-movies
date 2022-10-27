@@ -13,6 +13,7 @@ const Movies = () => {
   const location = useLocation();
 
   const search = useCallback(() => {
+    if (queryString === '') return;
     const exactUrl = 'search/movie';
     performSearch(exactUrl, queryString)
       .then(({ results }) => setMovies(results))
@@ -41,7 +42,8 @@ const Movies = () => {
         </SearchBtn>
       </SearchWrapper>
       <ul>
-        {movies.length > 0 && movies.map(movie => ListElement(movie, location))}
+        {movies.length > 0 &&
+          movies.map(movie => <ListElement info={movie} location={location} />)}
       </ul>
     </div>
   );

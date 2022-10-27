@@ -1,4 +1,5 @@
 import { Input } from './SearchBox.styled';
+import PropTypes from 'prop-types';
 
 export const SearchBox = ({ value, update }) => {
   return (
@@ -10,4 +11,9 @@ export const SearchBox = ({ value, update }) => {
       }}
     />
   );
+};
+
+SearchBox.propTypes = {
+  value: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
 };

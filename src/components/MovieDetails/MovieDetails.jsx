@@ -2,6 +2,7 @@ import {
   Wrapper,
   PosterWrapper,
 } from 'components/MovieDetails/MovieDetails.styled';
+import PropTypes from 'prop-types';
 
 export const MovieDetails = ({
   poster_path,
@@ -36,4 +37,13 @@ export const MovieDetails = ({
       </div>
     </Wrapper>
   );
+};
+
+MovieDetails.propTypes = {
+  poster_path: PropTypes.string.isRequired,
+  original_title: PropTypes.string.isRequired,
+  genres: PropTypes.arrayOf(PropTypes.object).isRequired,
+  overview: PropTypes.string.isRequired,
+  vote_average: PropTypes.string.isRequired,
+  release_date: PropTypes.number.isRequired,
 };
