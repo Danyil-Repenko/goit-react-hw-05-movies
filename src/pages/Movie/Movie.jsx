@@ -1,8 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect, Suspense, useRef } from 'react';
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { MovieDetails } from 'components/MovieDetails/MovieDetails';
 import { performSearch } from 'tools/performSearch';
+import { LinkWrapper, StyledLink } from 'pages/Movie/Movie.styled';
 
 const Movie = () => {
   const [movie, setMovie] = useState(null);
@@ -24,22 +25,17 @@ const Movie = () => {
         Go back
       </button>
       <div>{movie && MovieDetails(movie)}</div>
-      <div
-        style={{
-          borderTop: 'solid 1px #000000',
-          borderBottom: 'solid 1px #000000',
-        }}
-      >
+      <LinkWrapper>
         <p>Additional information</p>
         <ul>
           <li>
-            <NavLink to="cast">Cast</NavLink>
+            <StyledLink to="cast">Cast</StyledLink>
           </li>
           <li>
-            <NavLink to="reviews">Reviews</NavLink>
+            <StyledLink to="reviews">Reviews</StyledLink>
           </li>
         </ul>
-      </div>
+      </LinkWrapper>
       <div>
         <Suspense fallback={<div>Loading subpage...</div>}>
           <Outlet />
